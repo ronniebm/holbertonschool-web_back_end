@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-""" Pagination """
-
+""" Simple helper function
+"""
+from typing import List
 import csv
 import math
-from typing import List, Tuple
+
+
+index_range = __import__('0-simple_helper_function').index_range
 
 
 class Server:
@@ -22,12 +25,17 @@ class Server:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
             self.__dataset = dataset[1:]
-
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        pass
+        """Gets page
+        """
+        assert type(page) == int and page > 0
+        assert type(page_size) == int and page_size > 0
 
-    def index_range(page: int, page_size: int) -> Tuple[int, int]:
-        """ returns tuple of size two containing start index, end index """
-        pass
+        start, end = index_range(page, page_size)
+        result = []
+        if start >= len(self.dataset()):
+            return result
+        result = self.dataset()
+        return result[start:end]
